@@ -1,20 +1,77 @@
-# דיווח שעות — PWA
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a1d23">
+<meta name="description" content="דיווח שעות עבודה - Time Card">
+<title>דיווח שעות</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="דיווח שעות">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-## הרצה מקומית
-פתח את `index.html` בדפדפן. (ה-service worker לא יעבוד מ-file://, רק מ-hosting אמיתי.)
+<div class="app">
+  <div class="header">
+    <div>
+      <div class="eyebrow">Time Card</div>
+      <h1>דיווח שעות</h1>
+    </div>
+    <button id="exportBtn" class="icon-btn" aria-label="ייצוא ל-CSV">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </button>
+  </div>
 
-## פריסה ל-GitHub Pages
-1. צור repo חדש ב-GitHub (למשל `time-tracker`).
-2. העלה את **כל התוכן של התיקייה הזו** (index.html, style.css, app.js, manifest.json, service-worker.js, icons/) לשורש ה-repo.
-3. ב-repo: Settings → Pages → Source: בחר branch `main`, תיקייה `/ (root)` → Save.
-4. אחרי דקה-שתיים האתר יהיה זמין ב:
-   `https://<username>.github.io/<repo-name>/`
-5. פתח את הכתובת בדפדפן מובייל (Chrome באנדרואיד / Safari באייפון).
-6. תפריט הדפדפן → "הוסף למסך הבית" (Android: "Install app" מופיע אוטומטית; iPhone: Share → Add to Home Screen).
+  <div class="card punch-card">
+    <div class="knob knob-left"></div>
+    <div class="knob knob-right"></div>
+    <div class="timer" id="timerDisplay">00:00:00</div>
+    <div class="timer-sub" id="timerSub">השעון אינו פעיל</div>
+    <button id="clockBtn" class="clock-btn clock-in">
+      <svg id="clockIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span id="clockLabel">התחלת משמרת</span>
+    </button>
+  </div>
 
-## שמירת נתונים
-הנתונים נשמרים ב-localStorage של הדפדפן, **במכשיר הזה בלבד**. אין סנכרון בין מכשירים.
-גיבוי: כפתור הייצוא (⬇) למעלה מוריד קובץ CSV עם כל הרשומות.
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-label">השבוע</div>
+      <div class="stat-value"><span id="weekTotal">0.00</span><span class="stat-unit"> שעות</span></div>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-label">החודש</div>
+      <div class="stat-value"><span id="monthTotal">0.00</span><span class="stat-unit"> שעות</span></div>
+    </div>
+  </div>
 
-## עדכון גרסה
-אחרי שינוי קבצים, שנה את `CACHE_NAME` בתוך `service-worker.js` (למשל ל-`timetracker-v2`) כדי לאלץ את המשתמשים לקבל את הגרסה החדשה.
+  <div class="card chart-card">
+    <div class="section-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+      <span>7 ימים אחרונים</span>
+    </div>
+    <svg id="chartSvg" width="100%" height="160" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <div class="section-label history-label">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>היסטוריה</span>
+  </div>
+
+  <div id="historyEmpty" class="empty-state" style="display:none">
+    אין רשומות עדיין.<br>לחץ "התחלת משמרת" כדי להתחיל.
+  </div>
+
+  <div id="historyList"></div>
+
+  <div class="install-hint">להתקנה כאפליקציה: פתח בדפדפן ← תפריט ← "הוסף למסך הבית"</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
