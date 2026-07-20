@@ -1,0 +1,20 @@
+# דיווח שעות — PWA
+
+## הרצה מקומית
+פתח את `index.html` בדפדפן. (ה-service worker לא יעבוד מ-file://, רק מ-hosting אמיתי.)
+
+## פריסה ל-GitHub Pages
+1. צור repo חדש ב-GitHub (למשל `time-tracker`).
+2. העלה את **כל התוכן של התיקייה הזו** (index.html, style.css, app.js, manifest.json, service-worker.js, icons/) לשורש ה-repo.
+3. ב-repo: Settings → Pages → Source: בחר branch `main`, תיקייה `/ (root)` → Save.
+4. אחרי דקה-שתיים האתר יהיה זמין ב:
+   `https://<username>.github.io/<repo-name>/`
+5. פתח את הכתובת בדפדפן מובייל (Chrome באנדרואיד / Safari באייפון).
+6. תפריט הדפדפן → "הוסף למסך הבית" (Android: "Install app" מופיע אוטומטית; iPhone: Share → Add to Home Screen).
+
+## שמירת נתונים
+הנתונים נשמרים ב-localStorage של הדפדפן, **במכשיר הזה בלבד**. אין סנכרון בין מכשירים.
+גיבוי: כפתור הייצוא (⬇) למעלה מוריד קובץ CSV עם כל הרשומות.
+
+## עדכון גרסה
+אחרי שינוי קבצים, שנה את `CACHE_NAME` בתוך `service-worker.js` (למשל ל-`timetracker-v2`) כדי לאלץ את המשתמשים לקבל את הגרסה החדשה.
