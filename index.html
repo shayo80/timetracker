@@ -21,9 +21,14 @@
       <div class="eyebrow">Time Card</div>
       <h1>דיווח שעות</h1>
     </div>
-    <button id="exportBtn" class="icon-btn" aria-label="ייצוא ל-CSV">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    </button>
+    <div class="header-actions">
+      <button id="salaryBtn" class="icon-btn" aria-label="חישוב שכר">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </button>
+      <button id="exportBtn" class="icon-btn" aria-label="ייצוא ל-CSV">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+    </div>
   </div>
 
   <div class="card punch-card">
@@ -71,6 +76,28 @@
 </div>
 
 <div id="toast" class="toast"></div>
+
+<div id="passwordOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-title">הזן סיסמה</div>
+    <input type="password" id="passwordInput" class="modal-input" inputmode="numeric" autocomplete="off">
+    <div id="passwordError" class="modal-error">סיסמה שגויה</div>
+    <div class="modal-actions">
+      <button id="passwordCancel" class="modal-btn modal-btn-secondary">ביטול</button>
+      <button id="passwordSubmit" class="modal-btn modal-btn-primary">אישור</button>
+    </div>
+  </div>
+</div>
+
+<div id="salaryOverlay" class="modal-overlay">
+  <div class="modal-box salary-box">
+    <div class="modal-title">שכר משוער</div>
+    <div class="salary-hours" id="salaryHours">0.00 שעות</div>
+    <div class="salary-amount" id="salaryAmount">₪0</div>
+    <div class="salary-rate">לפי 85 ₪ לשעה</div>
+    <button id="salaryClose" class="modal-btn modal-btn-primary salary-close-btn">סגור</button>
+  </div>
+</div>
 
 <script src="app.js"></script>
 </body>

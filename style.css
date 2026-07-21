@@ -45,6 +45,11 @@ body {
 
 h1 { font-size: 22px; font-weight: 700; margin: 2px 0 0; }
 
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .icon-btn {
   background: var(--card);
   border: 1px solid var(--border);
@@ -55,6 +60,101 @@ h1 { font-size: 22px; font-weight: 700; margin: 2px 0 0; }
   cursor: pointer;
 }
 .icon-btn:hover { color: var(--amber); }
+
+/* Modals */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+
+.modal-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.modal-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text);
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 0.3em;
+  font-family: ui-monospace, monospace;
+}
+.modal-input:focus { outline: none; border-color: var(--amber); }
+
+.modal-error {
+  display: none;
+  color: var(--red);
+  font-size: 12px;
+  margin-top: 8px;
+}
+.modal-error.show { display: block; }
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.modal-btn {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.modal-btn-primary { background: var(--amber); color: var(--bg); }
+.modal-btn-secondary { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+
+.salary-box { max-width: 280px; }
+
+.salary-hours {
+  font-size: 13px;
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  margin-bottom: 4px;
+}
+
+.salary-amount {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--green);
+  font-family: ui-monospace, monospace;
+  margin: 8px 0;
+}
+
+.salary-rate {
+  font-size: 11px;
+  color: var(--muted-dim);
+  margin-bottom: 4px;
+}
+
+.salary-close-btn { margin-top: 16px; width: 100%; }
 
 .card {
   background: var(--card);

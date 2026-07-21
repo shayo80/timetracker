@@ -302,6 +302,68 @@
   clockBtn.addEventListener("click", () => (active ? clockOut() : clockIn()));
   exportBtn.addEventListener("click", exportCsv);
 
+  // Salary calculation
+  const SALARY_RATE = 85; // ₪ per hour
+  const SALARY_PASSWORD = "12345";
+
+  const salaryBtn = document.getElementById("salaryBtn");
+  const passwordOverlay = document.getElementById("passwordOverlay");
+  const passwordInput = document.getElementById("passwordInput");
+  const passwordError = document.getElementById("passwordError");
+  const passwordSubmit = document.getElementById("passwordSubmit");
+  const passwordCancel = document.getElementById("passwordCancel");
+  const salaryOverlay = document.getElementById("salaryOverlay");
+  const salaryHoursEl = document.getElementById("salaryHours");
+  const salaryAmountEl = document.getElementById("salaryAmount");
+  const salaryClose = document.getElementById("salaryClose");
+
+  function openPasswordModal() {
+    passwordInput.value = "";
+    passwordError.classList.remove("show");
+    passwordOverlay.classList.add("show");
+    setTimeout(() => passwordInput.focus(), 50);
+  }
+  function closePasswordModal() {
+    passwordOverlay.classList.remove("show");
+    passwordInput.value = "";
+  }
+
+  function totalHoursAllTime() {
+    return entries.reduce((s, e) => s + (new Date(e.end) - new Date(e.start)), 0) / 3600000;
+  }
+
+  function openSalaryModal() {
+    const hours = totalHoursAllTime();
+    const amount = Math.round(hours * SALARY_RATE);
+    salaryHoursEl.textContent = `${hours.toFixed(2)} שעות`;
+    salaryAmountEl.textContent = `₪${amount.toLocaleString("he-IL")}`;
+    salaryOverlay.classList.add("show");
+  }
+  function closeSalaryModal() {
+    salaryOverlay.classList.remove("show");
+    salaryHoursEl.textContent = "";
+    salaryAmountEl.textContent = "";
+  }
+
+  function checkPassword() {
+    if (passwordInput.value === SALARY_PASSWORD) {
+      closePasswordModal();
+      openSalaryModal();
+    } else {
+      passwordError.classList.add("show");
+      passwordInput.value = "";
+      passwordInput.focus();
+    }
+  }
+
+  salaryBtn.addEventListener("click", openPasswordModal);
+  passwordCancel.addEventListener("click", closePasswordModal);
+  passwordSubmit.addEventListener("click", checkPassword);
+  passwordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") checkPassword(); });
+  passwordOverlay.addEventListener("click", (e) => { if (e.target === passwordOverlay) closePasswordModal(); });
+  salaryClose.addEventListener("click", closeSalaryModal);
+  salaryOverlay.addEventListener("click", (e) => { if (e.target === salaryOverlay) closeSalaryModal(); });
+
   // init
   renderTimer();
   if (active) startTick();
